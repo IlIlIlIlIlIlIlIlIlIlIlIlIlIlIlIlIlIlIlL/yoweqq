@@ -20,17 +20,19 @@ while (task.wait() and getgenv().enabled) do
             and v.Team ~= game.Teams.Neutral and v.Character:FindFirstChild('Humanoid') and v.Character.Humanoid.Health ~= 0) then
 
             spawn(function()
-                repeat
+                repeat task.wait()
                     v.Character.HumanoidRootPart.Size = Vector3.new(11, 11, 11)
                     if (v == CPlayers:GetChildren()[index]) then
                         LcPlayer.Character:FindFirstChild('HumanoidRootPart').CFrame = v.Character.HumanoidRootPart.CFrame *CFrame.new(0, -1, 3)
                     else
                         task.wait()
+                        --
                     end
                 until LcPlayer.Character == nil or v:FindFirstChild('Humanoid') == nil or v.Humanoid.Health:GetPropertyChangedSignal('Health') == 0
             end)
         else
             task.wait()
+            --
         end
     end
 end
