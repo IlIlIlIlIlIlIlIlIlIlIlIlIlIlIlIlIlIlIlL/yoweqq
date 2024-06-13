@@ -1,12 +1,14 @@
 -- // https://github.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL
 local LcPlayer = game.Players.LocalPlayer
 
+--[[
 getgenv().Library = {
     _enabled = true, -- toggle
     HEAD_NEW_VECTORSIZE = Vector3.new(4, 4 ,4), -- size
     HEAD_NEW_TRANSPARENCY = 0.5, -- transparency
     _hitbox = 'Head' -- hitbox
 };
+]]
 
 local function GetCharacters()
     local Characters = {}
