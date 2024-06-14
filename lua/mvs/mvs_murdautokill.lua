@@ -1,3 +1,5 @@
+-- without using kill event
+
 local function blankfunction(...) : any
     return ...
 end
