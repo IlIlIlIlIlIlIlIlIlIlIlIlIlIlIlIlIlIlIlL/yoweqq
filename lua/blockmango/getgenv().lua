@@ -1,10 +1,11 @@
-getfenv().GlobalTable = {}
-local mtGlobalTable = setmetatable(getfenv().GlobalTable, {
+getfenv()._glEnvT = {}
+local mtGlobalTable = setmetatable(getfenv()._glEnvT, {
     __index = function(self)
-        return self
+        return type(self)
     end
 })
 
 getgenv = getfenv().GetGlobalEnvironment or getfenv().getgenv or function()
-  do return (getfenv().GlobalTable) or nil end
+  do return (getfenv()._glEnvT) or nil end
 end
+
