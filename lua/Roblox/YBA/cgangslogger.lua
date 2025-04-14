@@ -1,5 +1,4 @@
 local WH_Address = getgenv().SSS_WEBHOOK
-repeat task.wait() until game:IsLoaded()
 local Players = game:FindService([[Players]]) and cloneref(game:GetService([[Players]]))
 local HttpService = cloneref(game:GetService([[HttpService]]))
 local lcplayer = Players.LocalPlayer
