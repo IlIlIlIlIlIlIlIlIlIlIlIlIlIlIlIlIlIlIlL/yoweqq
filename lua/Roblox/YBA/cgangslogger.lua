@@ -1,5 +1,3 @@
-getgenv().SSS_WEBHOOK = 'https://discord.com/api/webhooks/1359904793447108859/TExOhgItyVUCMXKnLJ8hUw-g_jstKWv4lznx-Ab_o1m3yhVavBqR2X6RYBEnSNRDGj0-'
-
 local WH_Address = getgenv().SSS_WEBHOOK
 local Players = cloneref(game:GetService([[Players]]))
 local HttpService = cloneref(game:GetService([[HttpService]]))
