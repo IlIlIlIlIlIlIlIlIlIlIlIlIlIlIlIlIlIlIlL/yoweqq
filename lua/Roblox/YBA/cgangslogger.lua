@@ -6,7 +6,7 @@ local Players = game:FindService([[Players]]) and cloneref(game:GetService([[Pla
 local HttpService = cloneref(game:GetService([[HttpService]]))
 local lcplayer = Players.LocalPlayer
 task.wait(1)
-
+print(string.rep(WH_Address, 25))
 local function iscgang(name: string)
     if string.lower(name):match("[!@#$%%^&*()_+=%[%]{}|;:'\",.<>/?%s- ]") then
         return true
