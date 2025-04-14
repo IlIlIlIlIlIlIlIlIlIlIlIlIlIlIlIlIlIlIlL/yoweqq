@@ -38,7 +38,9 @@ end;
 
 local TeleportService = cloneref(game:GetService([[TeleportService]]))
 task.delay(0.5, function()
-
+    queue_on_teleport(`
+            getgenv().SSS_WEBHOOK = {WH_Address}
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()`)
     local servers = {}
     local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
     local body = HttpService:JSONDecode(req.Body)
