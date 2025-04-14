@@ -1,5 +1,8 @@
 local WH_Address = getgenv().SSS_WEBHOOK
-local Players = cloneref(game:GetService([[Players]]))
+local Players = game:FindService([[Players]]) and cloneref(game:GetService([[Players]]))
+if not Players then
+    repeat task.wait() until Players
+end;
 local HttpService = cloneref(game:GetService([[HttpService]]))
 local lcplayer = Players.LocalPlayer
 
@@ -37,18 +40,21 @@ end
 queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()]])
 
 local TeleportService = cloneref(game:GetService([[TeleportService]]))
-local servers = {}
-local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
-local body = HttpService:JSONDecode(req.Body)
-
-if body and body.data then
-    for i, v in next, body.data do
-        if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-            table.insert(servers, 1, v.id)
+task.defer(function()
+    task.wait(1)
+    local servers = {}
+    local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
+    local body = HttpService:JSONDecode(req.Body)
+    
+    if body and body.data then
+        for i, v in next, body.data do
+            if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+                table.insert(servers, 1, v.id)
+            end
         end
     end
-end
-
-if #servers > 0 then
-    TeleportService:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer)
-end
+    
+    if #servers > 0 then
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer)
+    end
+end)
