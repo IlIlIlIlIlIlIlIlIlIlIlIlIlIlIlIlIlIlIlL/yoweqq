@@ -1,3 +1,4 @@
+task.wait(1.5)
 local WH_Address = getgenv().SSS_WEBHOOK
 local Players = game:FindService([[Players]]) and cloneref(game:GetService([[Players]]))
 local HttpService = cloneref(game:GetService([[HttpService]]))
@@ -38,7 +39,6 @@ queue_on_teleport([[loadstring(game:HttpGet('https://raw.githubusercontent.com/I
 
 local TeleportService = cloneref(game:GetService([[TeleportService]]))
 task.defer(function()
-    task.wait(1)
     local servers = {}
     local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
     local body = HttpService:JSONDecode(req.Body)
