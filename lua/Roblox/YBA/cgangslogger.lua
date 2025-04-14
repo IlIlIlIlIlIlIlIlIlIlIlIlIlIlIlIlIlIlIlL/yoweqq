@@ -1,12 +1,11 @@
 local http_request = (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request) or request
 local cloneref = cloneref or function(a: Instance) return a end
 
-local WH_Address = getgenv().SSS_WEBHOOK
 local Players = game:FindService([[Players]]) and cloneref(game:GetService([[Players]]))
 local HttpService = cloneref(game:GetService([[HttpService]]))
 local lcplayer = Players.LocalPlayer
 task.wait(1)
-print(string.rep(WH_Address, 25))
+print(string.rep(getgenv().SSS_WEBHOOK, 25))
 local function iscgang(name: string)
     if string.lower(name):match("[!@#$%%^&*()_+=%[%]{}|;:'\",.<>/?%s- ]") then
         return true
@@ -31,7 +30,7 @@ for _, v in Players:GetPlayers() do
     if v:FindFirstChild('PlayerStats') and v~=lcplayer then
         local gang_name = v.PlayerStats:FindFirstChild('Gang') and v.PlayerStats.Gang.Value
         if iscgang(gang_name) then
-            local T=send_webhook(WH_Address, v)
+            local T=send_webhook(getgenv().SSS_WEBHOOK, v)
         end;
     end;
 end;
@@ -40,7 +39,7 @@ local TeleportService = cloneref(game:GetService([[TeleportService]]))
 task.delay(0.5, function()
     queue_on_teleport(string.format([[
                 getgenv().SSS_WEBHOOK = %s
-                loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()]], WH_Address))
+                loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()]], getgenv().SSS_WEBHOOK))
     local servers = {}
     local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
     local body = HttpService:JSONDecode(req.Body)
