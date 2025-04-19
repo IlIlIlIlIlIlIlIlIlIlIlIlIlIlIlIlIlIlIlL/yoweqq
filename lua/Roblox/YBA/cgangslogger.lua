@@ -34,6 +34,8 @@ for _, v in Players:GetPlayers() do
     end;
 end;
 
+queue_on_teleport(("getgenv().SSS_WEBHOOK = %s; loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()"):format(getgenv().SSS_WEBHOOK))
+
 local TeleportService = cloneref(game:GetService([[TeleportService]]))
 task.delay(0.5, function()
     local servers = {}
