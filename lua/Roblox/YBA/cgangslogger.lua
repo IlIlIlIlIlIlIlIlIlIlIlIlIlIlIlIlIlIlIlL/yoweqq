@@ -34,7 +34,7 @@ for _, v in Players:GetPlayers() do
     end;
 end;
 
-queue_on_teleport(([[getgenv().SSS_WEBHOOK = tostring(%s); print(getgenv().SSS_WEBHOOK); loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()]]):format(getgenv().SSS_WEBHOOK))
+queue_on_teleport("getgenv().SSS_WEBHOOK = ".. getgenv().SSS_WEBHOOK.. "; print(getgenv().SSS_WEBHOOK); loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()")
 
 local TeleportService = cloneref(game:GetService([[TeleportService]]))
 task.delay(0.5, function()
