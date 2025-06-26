@@ -1,4 +1,5 @@
--- execute script once and wait for hint on the screen
+-- 1.create file ../workspace/gangslogger_writer.txt
+-- 2.paste webhook in file
 
 assert(isfile or writefile or readfile, "[+] Shit exploit lol")
 print("[+] Gangs logger initilization")
