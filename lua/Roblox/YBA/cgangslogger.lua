@@ -1,3 +1,5 @@
+-- execute script once and wait for hint on the screen
+
 assert(isfile or writefile or readfile, "[+] Shit exploit lol")
 print("[+] Gangs logger initilization")
 
