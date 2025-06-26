@@ -1,56 +1,74 @@
-local http_request = (syn and syn.request) or (http and http.request) or (fluxus and fluxus.request) or request
-local cloneref = cloneref or function(a: Instance) return a end
+assert(isfile or writefile or readfile, "[+] Shit exploit lol")
+print("[+] Gangs logger initilization")
 
-local Players = game:FindService([[Players]]) and cloneref(game:GetService([[Players]]))
-local HttpService = cloneref(game:GetService([[HttpService]]))
+local function blankfunc(...): any
+    return ...
+end
+local cloneref : (obj : Instance) -> Instance = cloneref or blankfunc
+
+local gethui = gethui or function()
+    return cloneref(game:GetService([[CoreGui]]))
+end;
+
+local Players = cloneref(game:GetService([[Players]]))
 local lcplayer = Players.LocalPlayer
 
-local function iscgang(name: string)
-    if string.lower(name):match("[!@#$%%^&*()_+=%[%]{}|;:'\",.<>/?%s- ]") then
-        return true
-    end
-    return false
-end
+local HttpService = game:GetService([[HttpService]])
 
-local function send_webhook(webhook: string, plr: Player)
+if not isfile("gangslogger_writer.txt") then
+    writefile("gangslogger_writer.txt", "")
+end;
+
+local WH_URL = readfile("gangslogger_writer.txt")
+if not WH_URL or string.len(WH_URL) <= 2 then
+    local info = Instance.new("Hint", gethui())
+    info.Text = "[+] Failed to get webhook via ../workspace/gangslogger_writer.txt"
+    game:GetService([[Debris]]):AddItem(info, 20)
+    warn("[+] Failed to get webhook via ../workspace/gangslogger_writer.txt")
+    return;
+end;
+local http_request = request or http_request or (syn and syn.request)
+
+local SendMessage = function(webhook: string, message: string)
     local response = http_request({
         Url = webhook,
         Method = 'POST',
         Headers = {['Content-Type'] = 'application/json'},
         Body = HttpService:JSONEncode({
-            content = string.format('емодзи генг: %s, хуесос: %s', plr.PlayerStats.Gang.Value, plr.Name),
+            content = message,
             allowed_mentions = {parse = {}},
         })
     })
     return response
 end
 
-for _, v in Players:GetPlayers() do
-    if v:FindFirstChild('PlayerStats') and v~=lcplayer then
-        local gang_name = v.PlayerStats:FindFirstChild('Gang') and v.PlayerStats.Gang.Value
-        if iscgang(gang_name) then
-            local T=send_webhook(getgenv().SSS_WEBHOOK, v)
+coroutine.resume(coroutine.create(function()
+    for _, v in Players:GetPlayers() do
+        if v ~= lcplayer then
+            local name = v:FindFirstChild("PlayerStats") and v.PlayerStats:FindFirstChild("Gang") and v.PlayerStats.Gang.Value
+            if name:match("#") or name:match("%s") or (string.len(name) <= 2 and string.len(name) ~= 0) then
+                task.spawn(SendMessage, WH_URL, ("> Gangs name: %s, Members name: %s"):format(name or "Gang-Less????", v.Name))
+            end;
         end;
     end;
-end;
-
-queue_on_teleport("getgenv().SSS_WEBHOOK = ".. getgenv().SSS_WEBHOOK.. "; print(getgenv().SSS_WEBHOOK); loadstring(game:HttpGet('https://raw.githubusercontent.com/IlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlIlL/yoweqq/refs/heads/main/lua/Roblox/YBA/cgangslogger.lua'))()")
-
-local TeleportService = cloneref(game:GetService([[TeleportService]]))
-task.delay(0.5, function()
-    local servers = {}
-    local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
-    local body = HttpService:JSONDecode(req.Body)
+    do -- pasted from infinity yield
+        local servers = {}
+        local req = http_request({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", game.PlaceId)})
+        local body = HttpService:JSONDecode(req.Body)
     
-    if body and body.data then
-        for i, v in next, body.data do
-            if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-                table.insert(servers, 1, v.id)
+        if body and body.data then
+            for i, v in next, body.data do
+                if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+                    table.insert(servers, 1, v.id)
+                end
             end
         end
-    end
     
-    if #servers > 0 then
-        TeleportService:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer)
+        if #servers > 0 then
+            pcall(function()
+                game:GetService([[TeleportService]]):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer)
+            end)
+        end
     end
-end)
+end))
+print("[+] Execution success")
