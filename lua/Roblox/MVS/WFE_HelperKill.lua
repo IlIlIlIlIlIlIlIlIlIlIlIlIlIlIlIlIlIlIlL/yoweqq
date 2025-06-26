@@ -12,7 +12,7 @@ getgenv().enabled = true
 
 
 
-while (task.wait() and getgenv().enabled) do
+while (task.wait() and getgenv().enabled) do -- idk what is that shitcode
     if not (LcPlayer.Character.SpawnProtection.Disabled) then
         LcPlayer.Character.SpawnProtection.Disabled = true
     end
