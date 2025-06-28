@@ -63,15 +63,16 @@ coroutine.resume(coroutine.create(function()
             for i, v in next, body.data do
                 if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
                     table.insert(servers, 1, v.id)
-                end
-            end
-        end
+                end;
+            end;
+        end;
     
         if #servers > 0 then
-            pcall(function()
-                game:GetService([[TeleportService]]):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer)
-            end)
-        end
+            while task.wait(5) and lcplayer do
+                game:GetService([[TeleportService]]):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer);
+                --game:GetService([[GuiService]]):ClearError();
+            end;
+        end;
     end
 end))
 print("[+] Execution success")
