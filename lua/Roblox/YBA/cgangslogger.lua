@@ -46,6 +46,9 @@ local SendMessage = function(webhook: string, message: string)
 end
 
 coroutine.resume(coroutine.create(function()
+    repeat
+        task.wait();
+    until game:IsLoaded() and lcplayer and lcplayer:FindFirstChild("PlayerStats")
     for _, v in Players:GetPlayers() do
         if v ~= lcplayer then
             local name = v:FindFirstChild("PlayerStats") and v.PlayerStats:FindFirstChild("Gang") and v.PlayerStats.Gang.Value
@@ -68,10 +71,7 @@ coroutine.resume(coroutine.create(function()
         end;
     
         if #servers > 0 then
-            while task.wait(5) and lcplayer do
-                game:GetService([[TeleportService]]):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer);
-                --game:GetService([[GuiService]]):ClearError();
-            end;
+            game:GetService([[TeleportService]]):TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], lcplayer);
         end;
     end
 end))
